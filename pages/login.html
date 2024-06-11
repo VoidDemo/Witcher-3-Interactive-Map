@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="/resources/css/style-login.css">
+    <script src="/resources/scripts/login-window.js"> </script>
+</head>
+<body>
+    
+    <div class="login-container">
+        <h2>Logowanie</h2>
+        <form action="/submit-your-login-form" method="post">
+            <input type="text" placeholder="Nazwa użytkownika lub email" name="username" required class="inputs">
+            <input type="password" placeholder="Hasło" name="password" required class="inputs">
+            <button type="submit" onclick="closeWindowAndReload();">Zaloguj się</button>
+            <span>Nie masz konta? <a href="register.html">Zarejestruj się</a></span>
+        </form>
+    </div>
+
+    
+</body>
+</html>
