@@ -1,86 +1,98 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    // Funkcja do dynamicznego importowania modułów mapy
-    async function loadMapModules(path) {
-        const { createSmallMapLayer } = await import(`${path}/small-map.js`);
-        const { createMediumMapLayer } = await import(`${path}/medium-map.js`);
-        const { createLargeMapLayer } = await import(`${path}/large-map.js`);
-        return { createSmallMapLayer, createMediumMapLayer, createLargeMapLayer };
-    }
-
-    // Wykrywanie odpowiedniej ścieżki
+// Funkcja do ustawiania odpowiedniej mapy na podstawie ścieżki
+function setupMap() {
     let mapPath;
-    if (window.location.pathname.includes('/skellige/')) {
-        mapPath = '/resources/scripts/sk';
-    } else if (window.location.pathname.includes('/white_orchard/')) {
-        mapPath = '/resources/scripts/wo';
-    } else if (window.location.pathname.includes('/velen_novigrad/')) {
-        mapPath = '/resources/scripts/vn';
+    let minZoom;
+    let maxZoom;
+    let defaultZoom;
+    
+    // Pobranie bieżącej ścieżki URL
+    const currentPath = window.location.pathname;
+
+    // Sprawdzenie ścieżki i ustawienie odpowiednich wartości
+    if (currentPath.includes('/white_orchard/index.html')) {
+        mapPath = '/resources/maps/white_orchard/{z}/{x}/{y}.jpg';
+        minZoom = 2;
+        maxZoom = 5;
+        defaultZoom = 3;
+    } else if (currentPath.includes('/velen_novigrad/index.html')) {
+        mapPath = '/resources/maps/hos_velen/{z}/{x}/{y}.jpg';
+        minZoom = 1;
+        maxZoom = 6;
+        defaultZoom = 2;
     } else {
-        console.error('Unknown map type');
+        console.error('Nieznana ścieżka mapy');
         return;
     }
 
-    // Załadowanie odpowiednich modułów mapy
-    const { createSmallMapLayer, createMediumMapLayer, createLargeMapLayer } = await loadMapModules(mapPath);
 
+    // Inicjalizacja mapy z określonym środkiem i zoomem
     var map = L.map('mapid', {
         zoomControl: false,
         fullscreenControl: true,
-        zoomSnap: 0.5,  // Pozwala na zoomowanie w krokach co 0.5
-        zoomDelta: 0.5  // Określa krok zoomu na 0.5
-    }).setView([51.505, -0.09], 13.5);
+        worldCopyJump: false,
+        zoomSnap: 0.5,
+        zoomDelta: 0.5
+    }).setView([51.505, -0.09], defaultZoom); // Ustawienie środka mapy
 
-    // Dodanie kontrolek zoomu w prawym dolnym rogu
+    // Dodanie kontrolek zoomu
     L.control.zoom({
         position: 'bottomright',
         zoomInTitle: 'Przybliż',
         zoomOutTitle: 'Oddal'
     }).addTo(map);
 
-    // Dodanie przycisku pełnego ekranu w prawym dolnym rogu
-    L.control.fullscreen({
-        position: 'bottomright',
-        title: 'Pełny ekran',
-        titleCancel: 'Wyjdź z pełnego ekranu',
-        content: null,
-        forceSeparateButton: true,
-        forcePseudoFullscreen: true,
-        fullscreenElement: false
-    }).addTo(map);
-
-    // Dodanie popupu z koordynatami po kliknięciu na mapie
+    // Okienko z koordynatami
     map.on('click', function (e) {
         var coords = e.latlng;
         var lat = coords.lat.toFixed(5);
         var lng = coords.lng.toFixed(5);
+        console.log('Map clicked at:', lat, lng);
         L.popup()
             .setLatLng(coords)
             .setContent("Koordynaty: " + lat + ", " + lng)
             .openOn(map);
     });
 
-    // Tworzenie warstw mapy
-    var smallLayer = createSmallMapLayer(map);
-    var mediumLayer = createMediumMapLayer(map);
-    var largeLayer = createLargeMapLayer(map);
+    const bounds = [[51.51, -0.12], [51.53, -0.09]];
+    L.rectangle(bounds, {
+        color: "#ff0000", // Czerwony kolor obramowania
+        weight: 2,        // Grubość obramowania
+        fillOpacity: 0    // Przezroczystość wypełnienia
+    }).addTo(map);
 
-    // Funkcja zarządzająca warstwami
-    function manageLayers(zoomLevel) {
-        map.eachLayer(function(layer) { map.removeLayer(layer); }); // Usuń wszystkie warstwy
-        if (zoomLevel <= 12) {
-            smallLayer.addTo(map);
-        } else if (zoomLevel > 12 && zoomLevel <= 14) {
-            mediumLayer.addTo(map);
+    // Dodanie warstwy kafelków z opcją TMS
+    L.tileLayer(mapPath, {
+        minZoom: minZoom,
+        maxZoom: maxZoom,
+        tms: true, // Ustawienie odwrotnej numeracji kafelków
+        noWrap: true
+    }).addTo(map);
+
+
+    document.getElementById('search-button').addEventListener('click', function () {
+        const input = document.getElementById('coordinate-input').value;
+        const coords = input.split(',').map(coord => parseFloat(coord.trim()));
+
+        if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
+            const lat = coords[0];
+            const lng = coords[1];
+
+            // Przesunięcie mapy na nowe współrzędne
+            map.setView([lat, lng], defaultZoom);
+
+            // Wyświetlenie dymka na mapie
+            L.popup()
+                .setLatLng([lat, lng])
+                .setContent("Koordynaty: " + lat + ", " + lng)
+                .openOn(map);
         } else {
-            largeLayer.addTo(map);
+            alert("Wpisz poprawne współrzędne w formacie 'lat,lng'");
         }
-    }
-
-    // Początkowe dodanie średniej warstwy
-    mediumLayer.addTo(map);
-
-    // Listener dla zoomu
-    map.on('zoomend', function() {
-        manageLayers(map.getZoom());
     });
+
+}
+
+// Wywołanie funkcji po załadowaniu DOM
+document.addEventListener('DOMContentLoaded', function() {
+    setupMap();
 });

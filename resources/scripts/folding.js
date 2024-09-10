@@ -2,33 +2,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
     const button = document.getElementById('toggleButton');
     const image = document.getElementById('toggleImage');
+    const hideableDiv = document.getElementById('hideableDiv');
 
-        button.addEventListener('click', () => {
-            const isCollapsed = container.classList.contains('collapsed');
-            if (isCollapsed) {
-                container.classList.remove('collapsed');
-                image.src='/resources/images/cc_greaterthan-right.png';
-            } else {
-                container.classList.add('collapsed');
-                image.src='/resources/images/cc_greaterthan-left.png';//left
-            }
-        });
+    button.addEventListener('click', () => {
+        const isHidden = hideableDiv.style.display === 'none';
+        if (isHidden) {
+            hideableDiv.style.display = 'block'; // Pokazuje div
+            image.src = '/resources/images/cc_greaterthan-left.png'; // Zmienia obrazek
+        } else {
+            hideableDiv.style.display = 'none'; // Ukrywa div
+            image.src = '/resources/images/cc_greaterthan-right.png';
+        }
     });
+});
 
-    function showCategory(category) {
-    const categories = document.querySelectorAll('.text-box');
-        categories.forEach((cat) => {
-            if (category === 'all') {
-                cat.style.display = 'block';
-            } else {
-                if (cat.id === category) {
-                    cat.style.display = 'block';
-                } else {
-                    cat.style.display = 'none';
-                }
-            }
-        });
-    }
+function showCategory(category) {
+    document.querySelectorAll('.text-box').forEach((cat) => {
+        cat.style.display = (category === 'all' || cat.id === category) ? 'block' : 'none';
+    });
+}
 
     document.addEventListener('DOMContentLoaded', () => {
         const rightToggleButton = document.getElementById('rightToggleButton');
