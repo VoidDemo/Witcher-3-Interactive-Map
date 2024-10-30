@@ -1,0 +1,76 @@
+@font-face {
+    font-family: 'PFDINTextCondPro-Bold';
+    src: url('fonts/PFDINTextCondPro-Bold-subset.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body{
+    background-image: url(../images/witcher3.png);
+    font-family: 'PFDINTextCondPro-Bold', sans-serif;
+}
+a{
+    text-decoration: none;
+}
+#container{
+    width: 40%;
+    height: 100%;
+}
+#logo-image {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    display: block; 
+}
+
+#image1 {
+    width: 32vw; 
+    height: 18vh;
+}
+
+#text {
+    color: black; 
+    -webkit-text-stroke: 0.1px white; 
+    text-align: center; 
+    margin-top: 15px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    font-size: 20px; 
+    display: block; 
+    width: 100%; 
+    font-weight: bold;
+}
+#maps{
+    padding: 5px;
+    margin-top: 25px; /* Opcjonalnie, dodaje odstęp na górze */
+    margin-bottom: 10px; /* Opcjonalnie, dodaje odstęp na dole */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* Wyśrodkowanie dzieci w poziomie */
+    text-align: center; /* Wyśrodkowanie tekstu w każdym 'map-entry' */
+    width: 100%; /* Dostosuj zgodnie z potrzebami */
+    font-style: italic;
+
+}
+
+.map-entry {
+    background-color: black; /* Domyślne tło czarne */
+    color: rgb(187, 187, 81); /* Domyślny kolor tekstu żółty */
+    width: 12vw; 
+    height: 5vh; 
+    display: flex;
+    font-size: 22px;
+    font-weight: bold;
+    align-items: center; /* Wyśrodkowanie tekstu w pionie */
+    justify-content: center; /* Wyśrodkowanie tekstu w poziomie */
+    margin: 10px 5px 10px 5px; /* Odstęp między elementami */
+    opacity: 0.8;
+    border: 1px rgb(185, 187, 66) solid;
+}
+
+.map-entry:hover {
+    background-image: url(../images/map-texture.png); /* Tło zmienia się na obrazek */
+    background-size: cover;
+    color: black; /* Kolor tekstu zmienia się na czarny */
+}
