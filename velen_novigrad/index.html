@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Wiedźmin 3 Interaktywna Mapa</title>
-    <link rel="stylesheet" href="/resources/css/style.css" >
-    <link rel="stylesheet" href="/resources/css/leaflet.css"/>
-    <script type="module" src="/resources/scripts/shared.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="/resources/scripts/folding.js"> </script>
-    <script src="/resources/scripts/login-window.js"> </script>
-    <link rel="stylesheet" href="/resources/css/Control.FullScreen.css" />
-    <script src="/resources/scripts/Control.FullScreen.js"></script>
-    
+    <link rel="icon" type="image/x-icon" href="../files/images/icons/witcher3.ico">
+    <link rel="stylesheet" href="../files/css/style.css" >
+    <link rel="stylesheet" href="../files/css/leaflet.css"/>
+    <script type="module" src="../files/scripts/shared.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="../files/css/Control.FullScreen.css" />
+    <script src="../files/scripts/Control.FullScreen.js"></script>
+    <script src="../files/scripts/folding.js"> </script>
+    <script src="../files/scripts/login-window.js"> </script>
+    <script src="../files/scripts/mapdata_vn.js"></script>
     
 </head>
 <body>
     
     <div id="container" class="container">
         <button id="toggleButton" class="toggle-button">
-            <img id="toggleImage" src="/resources/images/cc_greaterthan-left.png" alt="<<" width="25" height="25">
+            <img id="toggleImage" src="../files/images/cc_greaterthan-left.png" alt="<<" width="25" height="25">
         </button>
         <div id="hideableDiv" class="hideable-div">
             <div id="logo-image"> 
-                <a href="/pages/index.html"><img src="/resources/images/witcher-icon-png.png" id="image1"></a>
+                <a href="../pages/index.html"><img src="../files/images/witcher-icon-png.png" id="image1"></a>
 
             </div>
 
             <div id="maps">
-                <a href="/white_orchard/index.html"><div class="map-entry">Biały Sad</div></a>
-                <a href="/velen_novigrad/index.html"><div class="map-entry">Novigrad</div></a>
-                <a href="/skellige/index.html"><div class="map-entry">Skellige (TBA)</div></a>
+                <a href="../white_orchard/index.html"><div class="map-entry">Biały Sad</div></a>
+                <a href="index.html"><div class="map-entry">Novigrad</div></a>
+                <a><div class="map-entry">Skellige (TBA)</div></a>
             </div>
             
             <div class="content-box"> 
@@ -44,16 +46,58 @@
                         <h2>Lokacje</h2>
                         <div class="box-content">
                             <ul>
-                                <li> <img src="/resources/images/icons/abandoned.png"> Opuszczone miejsce <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/banditcamp.png"> Obóz bandytów <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/monsternest.png"> Gniazdo potworów <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/monsterden.png"> Pieczara potworów <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/contract.png"> Kontrakty <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/guarded.png"> Strzeżony skarb <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/signpost.png"> Drogowskaz <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/pop.png"> Miejsce mocy <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/smugglers.png"> Kontrabanda <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/spoils.png"> Łupy wojenne <div class="badge">1</div></li>
+                                <li>
+                                    <img src="../files/images/icons/abandoned.png"> Opuszczone miejsce 
+                                    <div class="badge" id="vn-abandoned-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/banditcamp.png"> Obóz bandytów 
+                                    <div class="badge" id="vn-banditcamp-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/pid.png"> Ludzie w opałach 
+                                    <div class="badge" id="vn-pid-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/monsternest.png"> Gniazdo potworów 
+                                    <div class="badge" id="vn-monsternest-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/monsterden.png"> Pieczara potworów 
+                                    <div class="badge" id="vn-monsterden-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/contract.png"> Kontrakty 
+                                    <div class="badge" id="vn-contract-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/guarded.png"> Strzeżony skarb 
+                                    <div class="badge" id="vn-guarded-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/signpost.png"> Drogowskaz 
+                                    <div class="badge" id="vn-signpost-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/pop.png"> Miejsce mocy 
+                                    <div class="badge" id="vn-pop-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/smugglers.png"> Kontrabanda 
+                                    <div class="badge" id="vn-smugglers-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/spoils.png"> Łupy wojenne 
+                                    <div class="badge" id="vn-spoils-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/entrance.png"> Wejście 
+                                    <div class="badge" id="vn-entrance-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/hidden.png"> Ukryty Skarb 
+                                    <div class="badge" id="vn-hidden-count">1</div>
+                                </li>
                             </ul>
                         </div>
                         
@@ -62,13 +106,38 @@
                         <h2>Usługi</h2>
                         <div class="box-content">
                             <ul>
-                                <li> <img src="/resources/images/icons/armourer.png"> Zbrojmistrz <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/blacksmith.png"> Kowal <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/tavern.png"> Tawerna <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/shopkeeper.png"> Sprzedawca <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/herbalist.png"> Zielarz <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/barber.png"> Balwierz <div class="badge">1</div></li>
-                                <li> <img src="/resources/images/icons/brothel.png"> Dom publiczny <div class="badge">1</div></li>
+                                <li>
+                                    <img src="../files/images/icons/armourer.png"> Zbrojmistrz 
+                                    <div class="badge" id="vn-armourer-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/blacksmith.png"> Kowal 
+                                    <div class="badge" id="vn-blacksmith-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/tavern.png"> Tawerna 
+                                    <div class="badge" id="vn-tavern-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/shopkeeper.png"> Sprzedawca 
+                                    <div class="badge" id="vn-shopkeeper-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/herbalist.png"> Zielarz 
+                                    <div class="badge" id="vn-herbalist-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/alchemy.png"> Składniki alchemiczne
+                                    <div class="badge" id="vn-alchemy-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/barber.png"> Balwierz 
+                                    <div class="badge" id="vn-barber-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/brothel.png"> Dom publiczny 
+                                    <div class="badge" id="vn-brothel-count">1</div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -76,9 +145,22 @@
                         <h2>Misje i zadania</h2>
                         <div class="box-content">
                             <ul>
-                                <li> <img src="/resources/images/icons/scavenger.png"> Schematy wiedźmińskie </li>
-                                <li> <img src="/resources/images/icons/sidequests.png"> Misje poboczne </li>
-                                <li> <img src="/resources/images/icons/gwent.png"> Gracze gwinta </li>
+                                <li>
+                                    <img src="../files/images/icons/scavenger.png"> Schematy wiedźmińskie 
+                                    <div class="badge" id="vn-scavenger-count"></div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/notice.png"> Tablica ogłoszeń 
+                                    <div class="badge" id="vn-notice-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/gwent.png"> Gracze gwinta 
+                                    <div class="badge" id="vn-gwent-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/gwentquest.png"> Gwint zadania 
+                                    <div class="badge" id="vn-gwentquest-count">1</div>
+                                </li>
                             </ul>        
                         </div>
                     </div>
@@ -86,8 +168,14 @@
                         <h2>Przedmioty</h2>
                         <div class="box-content">
                             <ul>
-                                <li> <img src="/resources/images/icons/grindstone.png"> Kamień szlifierski </li>
-                                <li> <img src="/resources/images/icons/armourerstable.png"> Stół płatnerski </li>
+                                <li>
+                                    <img src="../files/images/icons/grindstone.png"> Kamień szlifierski 
+                                    <div class="badge" id="vn-grindstone-count"></div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/armourerstable.png"> Stół płatnerski 
+                                    <div class="badge" id="vn-armourerstable-count"></div>
+                                </li>
                             </ul> 
                         </div>
                     </div>
@@ -95,7 +183,13 @@
             </div>
 
             <div id="credits">
-                Twórca mapy Błażej Klimas
+                <button class="function-tab" id="toggle-markers-btn">
+                    <img src="../files/images/icons/hide.png" alt="Ukryj wszystko"> Ukryj wszystko
+                </button >
+                    
+                <button class="function-tab">
+                    <img src="../files/images/copyright-24.png"> Autor
+                </button>
             </div>
             
         </div>
