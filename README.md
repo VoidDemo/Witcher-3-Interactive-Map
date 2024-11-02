@@ -14,3 +14,6 @@ Wykorzystane oprogramowanie:
 * Środowisko aplikacji : Microsoft Visual Studio Code
 * Backend: SpringBoot
 * Frontend: Javascript
+* Leaflet
+* Leaflet.fullscreen
+* Leaflet Control Search
