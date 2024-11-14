@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <title data-i18n="register.title">Rejestracja</title>
+    <link rel="stylesheet" href="../files/css/style-login.css">
+    <script src="../files/scripts/login-window.js"></script>
+    <script src="../files/scripts/language.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <h2 data-i18n="register.header">Rejestracja</h2>
+        <form action="/submit-your-login-form" method="post">
+            <input type="text" placeholder="Email" name="username" required class="inputs" data-i18n-placeholder="register.email_placeholder">
+            <input type="password" placeholder="Hasło" name="password" required class="inputs" data-i18n-placeholder="register.password_placeholder">
+            <input type="password" placeholder="Powtórz hasło" name="password_confirm" required class="inputs" data-i18n-placeholder="register.confirm_password_placeholder">
+            <button type="submit" onclick="closeWindowAndReload();" data-i18n="register.button">Zarejestruj się</button>
+        </form>
+    </div>
+</body>
+</html>

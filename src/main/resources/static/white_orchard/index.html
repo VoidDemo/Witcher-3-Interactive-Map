@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="site.title">Wiedźmin 3 Interaktywna Mapa</title>
+    <link rel="icon" type="image/x-icon" href="../files/images/icons/witcher3.ico">
+    <link rel="stylesheet" href="../files/css/style.css">
+    <link rel="stylesheet" href="../files/css/leaflet.css"/>
+    <script src="../files/scripts/shared.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="../files/css/Control.FullScreen.css"/>
+    <script src="../files/scripts/Control.FullScreen.js"></script>
+    <script src="../files/scripts/custom.js"></script>
+    <script src="../files/scripts/login-window.js"></script>
+    <script src="../files/scripts/mapdata_wo.js"></script>
+    <link rel="stylesheet" href="../files/css/leaflet-search.css"/>
+    <script src="../files/scripts/leaflet-search.js"></script> 
+    <script src="../files/scripts/language.js"></script>
+</head>
+<body>
+    <div id="container" class="container">
+        <button id="toggleButton" class="toggle-button">
+            <img id="toggleImage" src="../files/images/cc_greaterthan-left.png" alt="<<" width="25" height="25">
+        </button>
+        <div id="hideableDiv" class="hideable-div">
+            <div id="logo-image">
+                <a href="../pages/index.html"><img src="../files/images/witcher-icon-pl.png" id="image1"></a>
+            </div>
+
+            <div id="maps">
+                <a href="../white_orchard/index.html"><div class="map-entry" data-i18n="white_orchard">Biały Sad</div></a>
+                <a href="../velen_novigrad/index.html"><div class="map-entry" data-i18n="novigrad">Novigrad</div></a>
+                <a><div class="map-entry" data-i18n="skellige">Skellige (TBA)</div></a>
+            </div>
+            
+            <div class="content-box"> 
+                <div class="tabs">
+                    <button class="tab" onclick="showCategory('all')" data-i18n="all">Wszystko</button>
+                    <button class="tab" onclick="showCategory('category1')" data-i18n="locations">Lokacje</button>
+                    <button class="tab" onclick="showCategory('category2')" data-i18n="services">Usługi</button>
+                    <button class="tab" onclick="showCategory('category3')" data-i18n="missions_quests">Misje i zadania</button>
+                    <button class="tab" onclick="showCategory('category4')" data-i18n="items">Przedmioty</button>
+                </div>
+                <div class="content">
+                    <div id="category1" class="text-box">
+                        <h2 data-i18n="locations">Lokacje</h2>
+                        <div class="box-content">
+                            <ul>
+                                <li>
+                                    <img src="../files/images/icons/abandoned.png"> 
+                                    <span data-i18n="type.abandoned">Opuszczone miejsce</span>
+                                    <div class="badge" id="wo-abandoned-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/banditcamp.png"> 
+                                    <span data-i18n="type.banditcamp">Obóz bandytów</span>
+                                    <div class="badge" id="wo-banditcamp-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/monsternest.png"> 
+                                    <span data-i18n="type.monsternest">Gniazdo potworów</span>
+                                    <div class="badge" id="wo-monsternest-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/contract.png"> 
+                                    <span data-i18n="type.contract">Kontrakty</span>
+                                    <div class="badge" id="wo-contract-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/guarded.png"> 
+                                    <span data-i18n="type.guarded">Strzeżony skarb</span>
+                                    <div class="badge" id="wo-guarded-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/signpost.png"> 
+                                    <span data-i18n="type.signpost">Drogowskaz</span>
+                                    <div class="badge" id="wo-signpost-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/pop.png"> 
+                                    <span data-i18n="type.pop">Miejsce mocy</span>
+                                    <div class="badge" id="wo-pop-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/smugglers.png"> 
+                                    <span data-i18n="type.smugglers">Kontrabanda</span>
+                                    <div class="badge" id="wo-smugglers-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/spoils.png"> 
+                                    <span data-i18n="type.spoils">Łupy wojenne</span>
+                                    <div class="badge" id="wo-spoils-count">1</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="category2" class="text-box">
+                        <h2 data-i18n="services">Usługi</h2>
+                        <div class="box-content">
+                            <ul>
+                                <li>
+                                    <img src="../files/images/icons/armourer.png"> 
+                                    <span data-i18n="type.armourer">Zbrojmistrz</span>
+                                    <div class="badge" id="wo-armourer-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/blacksmith.png"> 
+                                    <span data-i18n="type.blacksmith">Kowal</span>
+                                    <div class="badge" id="wo-blacksmith-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/tavern.png"> 
+                                    <span data-i18n="type.tavern">Tawerna</span>
+                                    <div class="badge" id="wo-tavern-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/shopkeeper.png"> 
+                                    <span data-i18n="type.shopkeeper">Sprzedawca</span>
+                                    <div class="badge" id="wo-shopkeeper-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/herbalist.png"> 
+                                    <span data-i18n="type.herbalist">Zielarz</span>
+                                    <div class="badge" id="wo-herbalist-count">1</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="category3" class="text-box">
+                        <h2 data-i18n="missions_quests">Misje i zadania</h2>
+                        <div class="box-content">
+                            <ul>
+                                <li>
+                                    <img src="../files/images/icons/scavenger.png"> 
+                                    <span data-i18n="type.scavenger">Schematy wiedźmińskie</span>
+                                    <div class="badge" id="wo-scavenger-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/gwent.png"> 
+                                    <span data-i18n="type.gwent">Gracze gwinta</span>
+                                    <div class="badge" id="wo-gwent-count"></div>
+                                </li>
+                            </ul>        
+                        </div>
+                    </div>
+                    <div id="category4" class="text-box">
+                        <h2 data-i18n="items">Przedmioty</h2>
+                        <div class="box-content">
+                            <ul>
+                                <li>
+                                    <img src="../files/images/icons/grindstone.png"> 
+                                    <span data-i18n="type.grindstone"> Kamień szlifierski</span>
+                                    <div class="badge" id="wo-grindstone-count">1</div>
+                                </li>
+                                <li>
+                                    <img src="../files/images/icons/armourerstable.png" > 
+                                    <span data-i18n="type.armourerstable">Stół płatnerski</span> 
+                                    <div class="badge" id="wo-armourerstable-count">1</div>
+                                </li>
+                            </ul> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="function-buttons">
+                <button class="function-tab" id="toggle-markers-btn">
+                    <img src="../files/images/icons/hide.png" alt="Ukryj wszystko">
+                    <span data-i18n="hide_everything">Ukryj wszystko</span>
+                </button>
+                
+                <button class="function-tab" id="credits">
+                    <img src="../files/images/copyright-24.png" alt="Autor">
+                    <span data-i18n="author">Autor</span>
+                </button>
+                
+                <button class="function-tab" id="clear-storage-btn">
+                    <img src="../files/images/trashcan.png" alt="Wyczyść dane">
+                    <span data-i18n="clean_storage">Wyczyść dane</span>
+                </button>
+
+                <div class="custom-select">
+                    <div class="selected-option">
+                        <img src="../files/images/flags/pl.png" class="flag-icon"> Polski
+                    </div>
+                    <div class="options">
+                        <div class="option" data-value="pl">
+                            <img src="../files/images/flags/pl.png" class="flag-icon"> Polski
+                        </div>
+                        <div class="option" data-value="en">
+                            <img src="../files/images/flags/en.png" class="flag-icon"> English
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="languageSelector">
+            </div>
+        </div>
+    </div>
+
+    <div id="rightFeature" class="right-feature">
+        
+        <div id="rightContent" class="right-content">
+            <a href="#" onclick="openLoginWindow('login'); return false;" id="loginLink" data-i18n="login">Logowanie</a><br>
+            <span data-i18n="account.span">Nie masz konta?</span>
+            <a href="#" onclick="openLoginWindow('register'); return false;" id="registerLink" data-i18n="signup">Rejestracja</a>
+        </div>
+
+        <div id="secondRightContent" class="right-content" data-i18n="demoMessage">Wersja demo. Funkcja niedostępna</div>
+        <div id="thirdRightContent" class="right-content" data-i18n="demoMessage">Wersja demo. Funkcja niedostępna</div>
+        
+        <div class="right-buttons">
+            <button id="rightToggleButton" class="right-toggle-button">
+                <span class="tooltip" data-i18n="tooltip.account">Konto</span>
+            </button>
+            <hr>
+            <button id="secondRightToggleButton" class="right-toggle-button">
+                <span class="tooltip" data-i18n="tooltip.points">Znaczniki</span>
+            </button>
+            <hr>
+            <button id="thirdRightToggleButton" class="right-toggle-button">
+                <span class="tooltip" data-i18n="tooltip.path">Spersonalizowana ścieżka</span>
+            </button>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <span id="closePopup" class="close">&times;</span>
+        <h1 data-i18n="info.title">Informacje o autorze</h1>
+        <p data-i18n="info.author">Autorem aplikacji jest Błażej Klimas</p>
+        <p>
+            <span data-i18n="info.link1">Link do</span>  
+            <a href="https://github.com/VoidDemo/Witcher-3-Interactive-Map" target="_blank" data-i18n="info.link2">githuba</a>
+        </p>
+    </div>
+
+    <div id="mapid"></div>
+</body>
+</html>

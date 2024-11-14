@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="site.title">Wiedźmin 3 Interaktywna Mapa</title>
+    <link rel="icon" type="image/x-icon" href="../files/images/icons/witcher3.ico">
+    <link rel="stylesheet" href="../files/css/style2.css" >
+    <script src="../files/scripts/custom.js"></script>
+    <script src="../files/scripts/language.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="logo-image"> 
+            <a href="index.html"><img src="../files/images/witcher-icon-pl.png" id="image1"></a>
+        </div>
+        <div id="text">
+            <span data-i18n="unofficial_map">Nieoficjalna mapa interaktywna dla gry Wiedźmin 3 : Dziki Gon</span><br>
+            <span data-i18n="development_phase">(Mapa w fazie rozwoju)</span>
+        </div>
+        <div id="language-selector-wrapper">
+            <span data-i18n="chooseLanguage">Wybierz język</span><br>
+            <div class="custom-select">
+                <div class="selected-option">
+                    <img src="../files/images/flags/pl.png" class="flag-icon"> Polski
+                </div>
+                <div class="options">
+                    <div class="option" data-value="pl">
+                        <img src="../files/images/flags/pl.png" class="flag-icon"> Polski
+                    </div>
+                    <div class="option" data-value="en">
+                        <img src="../files/images/flags/en.png" class="flag-icon"> English
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="languageSelector">
+        </div>
+        
+        <div id="maps">
+            <a href="../white_orchard/index.html"><div class="map-entry" data-i18n="white_orchard">Biały Sad</div></a>
+            <a href="../velen_novigrad/index.html"><div class="map-entry" data-i18n="novigrad">Novigrad</div></a>
+            <a><div class="map-entry" data-i18n="skellige">Skellige (TBA)</div></a>
+        </div>
+    </div>
+</body>
+</html>
