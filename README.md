@@ -17,3 +17,5 @@ Wykorzystane oprogramowanie:
 * Leaflet
 * Leaflet.fullscreen
 * Leaflet Control Search
+
+Pliki odpowiedzialne za [FrontEnd](https://github.com/VoidDemo/Witcher-3-Interactive-Map/tree/main/src/main/resources/static)
