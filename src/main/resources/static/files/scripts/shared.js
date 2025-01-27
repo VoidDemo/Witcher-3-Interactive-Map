@@ -173,20 +173,51 @@ function setupMap() {
         layer: markersLayerGroup,
         propertyName: 'name',
         marker: false,
-        moveToLocation: function(latlng, title, map) {
-            map.setView(latlng, map.getZoom());
-            searchItems.find(item => item.title === title).marker.openTooltip();
+        initial: false,
+        moveToLocation: function (latlng, title, map) {
+            map.setView(latlng, 6);
+
+            var foundItem = searchItems.find(item => 
+                item.title === title && 
+                item.loc[0].toFixed(4) == latlng.lat.toFixed(4) && 
+                item.loc[1].toFixed(4) == latlng.lng.toFixed(4)
+            );
+
+            if (foundItem) {
+                foundItem.marker.openTooltip();
+            }
+            var highlightCircle = L.circle([latlng.lat, latlng.lng], {
+                color: 'red',       
+                fillColor: 'red',   
+                fillOpacity: 0.7,   
+                radius: 30000       
+            }).addTo(map);
+
+            setTimeout(() => {
+                map.removeLayer(highlightCircle);
+            }, 1200);
         },
         textPlaceholder: search,
-        position: 'bottomright'
+        position: 'bottomright',
+        buildTip: function (text, val) {
+            var latlng = val.layer.getLatLng();
+            return `<a href="#" class="search-tip">${text} (${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)})</a>`;
+        }
     });
 
     map.addControl(searchControl);
-    searchControl.on('search:locationfound', function(e) {
+
+    searchControl.searchLayer = L.layerGroup(
+        searchItems.map(item => {
+            let marker = item.marker;
+            marker.options.name = item.title;
+            return marker;
+        })
+    );
+
+    searchControl.on('search:locationfound', function (e) {
         if (e.layer._popup) e.layer.openPopup();
     });
-    
-    searchControl.searchLayer = L.layerGroup(searchItems.map(item => item.marker));
 
     var hiddenMarkers = JSON.parse(localStorage.getItem('hiddenMarkers')) || {};
     for (const [type, markers] of Object.entries(markersByType)) {
